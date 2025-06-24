@@ -1,1 +1,1 @@
-export { EventDashboard } from "./EventDashboard";
+export { EventDashboard } from "./EventDashboard"; 

@@ -2,7 +2,7 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import { ArrowLeft, Gamepad2 } from "lucide-react";
 
-export const Games = (): JSX.Element => {
+export const EventDashboard = (): JSX.Element => {
   const navigate = useNavigate();
 
   // Sidebar Component
@@ -88,7 +88,7 @@ export const Games = (): JSX.Element => {
           </div>
           
           <h1 className="text-6xl font-bold text-white mb-4 animate-pulse">
-            Games
+            Event Dashboard
           </h1>
           
           <div className="text-2xl text-purple-400 font-semibold mb-8 animate-fade-in-delay">
@@ -96,7 +96,7 @@ export const Games = (): JSX.Element => {
           </div>
           
           <p className="text-xl text-gray-400 max-w-md mx-auto leading-relaxed animate-slide-up">
-            Get ready for an amazing gaming experience! We're working on something special that will bring the community together through interactive games and challenges.
+            Get ready for an amazing event management experience! We're working on something special that will help you manage and track your events with ease.
           </p>
           
           <div className="mt-12 flex justify-center space-x-4">
