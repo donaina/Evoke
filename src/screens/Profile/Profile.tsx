@@ -446,8 +446,8 @@ export const Profile = (): JSX.Element => {
                   Overview
                 </button>
                 <button 
-                  onClick={() => setActiveTab('tickets')}
-                  className="py-3 px-6 rounded-lg font-semibold transition-all duration-300 bg-[#FC1924] text-white"
+                  onClick={() => navigate('/my-tickets')}
+                  className="flex-1 py-3 px-6 rounded-lg font-semibold transition-all duration-300 text-gray-400 hover:text-white hover:bg-[#3a3a3a]"
                 >
                   My Tickets
                 </button>

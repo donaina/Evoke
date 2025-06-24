@@ -172,7 +172,7 @@ export const Home = (): JSX.Element => {
   };
 
   const handleBuyTicket = (event: any) => {
-    navigate(`/ticket-purchase/${event.id}`);
+    navigate(`/event-detail/${event.id}`);
   };
 
   const handleBackToHome = () => {
