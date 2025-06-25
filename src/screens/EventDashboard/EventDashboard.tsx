@@ -28,7 +28,10 @@ export const EventDashboard = (): JSX.Element => {
           </div>
         </div>
 
-        <div className="group cursor-pointer">
+        <div 
+          className="group cursor-pointer"
+          onClick={() => navigate('/games')}
+        >
           <div className="w-12 h-12 bg-purple-100 rounded-xl flex items-center justify-center transition-all duration-300 hover:scale-110 hover:shadow-lg">
             <div className="w-6 h-6 text-purple-600">🎮</div>
           </div>

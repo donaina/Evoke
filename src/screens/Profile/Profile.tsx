@@ -28,9 +28,9 @@ import {
   MessageCircle
 } from "lucide-react";
 
-export const Profile = (): JSX.Element => {
+export const Profile = (): JSX.Element | null => {
   const navigate = useNavigate();
-  const [activeTab, setActiveTab] = useState('overview');
+  const [activeTab, setActiveTab] = useState<'overview' | 'tickets' | 'events' | 'management'>('overview');
   const [currentTicketIndex, setCurrentTicketIndex] = useState(0);
   const [currentUsedTicketIndex, setCurrentUsedTicketIndex] = useState(0);
 
@@ -184,12 +184,18 @@ export const Profile = (): JSX.Element => {
   // Sidebar Component
   const Sidebar = () => (
     <div className="fixed left-0 top-0 h-full w-20 bg-white flex flex-col items-center py-6 space-y-8 z-10 shadow-lg">
-      <div className="w-12 h-12 bg-gradient-to-br from-purple-500 to-pink-500 rounded-xl flex items-center justify-center transform hover:scale-110 transition-all duration-300 cursor-pointer">
+      <div 
+        className="w-12 h-12 bg-gradient-to-br from-purple-500 to-pink-500 rounded-xl flex items-center justify-center transform hover:scale-110 transition-all duration-300 cursor-pointer"
+        onClick={() => navigate('/home')}
+      >
         <div className="w-8 h-8 bg-white rounded-lg"></div>
       </div>
 
       <div className="flex flex-col space-y-6">
-        <div className="relative group cursor-pointer">
+        <div 
+          className="relative group cursor-pointer"
+          onClick={() => navigate('/messages')}
+        >
           <div className="w-12 h-12 bg-gray-100 hover:bg-pink-100 rounded-xl flex items-center justify-center transition-all duration-300 hover:scale-110 hover:shadow-lg">
             <MessageCircle className="w-6 h-6 text-gray-600 group-hover:text-pink-600" />
           </div>
@@ -198,25 +204,37 @@ export const Profile = (): JSX.Element => {
           </div>
         </div>
 
-        <div className="group cursor-pointer">
+        <div 
+          className="group cursor-pointer"
+          onClick={() => navigate('/games')}
+        >
           <div className="w-12 h-12 bg-gray-100 hover:bg-purple-100 rounded-xl flex items-center justify-center transition-all duration-300 hover:scale-110 hover:shadow-lg">
             <div className="w-6 h-6 text-gray-600 group-hover:text-purple-600">🎮</div>
           </div>
         </div>
 
-        <div className="group cursor-pointer">
+        <div 
+          className="group cursor-pointer"
+          onClick={() => navigate('/discovery')}
+        >
           <div className="w-12 h-12 bg-gray-100 hover:bg-blue-100 rounded-xl flex items-center justify-center transition-all duration-300 hover:scale-110 hover:shadow-lg">
             <div className="w-6 h-6 text-gray-600 group-hover:text-blue-600">🌐</div>
           </div>
         </div>
 
-        <div className="group cursor-pointer">
+        <div 
+          className="group cursor-pointer"
+          onClick={() => navigate('/profile')}
+        >
           <div className="w-12 h-12 bg-orange-100 rounded-xl flex items-center justify-center transition-all duration-300 hover:scale-110 hover:shadow-lg">
             <div className="w-6 h-6 text-orange-600">👤</div>
           </div>
         </div>
 
-        <div className="group cursor-pointer">
+        <div 
+          className="group cursor-pointer"
+          onClick={() => navigate('/support')}
+        >
           <div className="w-12 h-12 bg-gray-100 hover:bg-yellow-100 rounded-xl flex items-center justify-center transition-all duration-300 hover:scale-110 hover:shadow-lg">
             <div className="w-6 h-6 text-gray-600 group-hover:text-yellow-600">❓</div>
           </div>
