@@ -1,7 +1,9 @@
 import React, { Suspense } from 'react';
 import ReactDOM from 'react-dom/client';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { HelmetProvider } from 'react-helmet-async';
 import { ErrorBoundary } from './components/ErrorBoundary';
+import SEO from './components/SEO';
 import { FullScreenLoading } from './components/ui/loading';
 
 // Lazy load all components for better performance
@@ -32,31 +34,34 @@ const RouteLoading = () => (
 
 ReactDOM.createRoot(document.getElementById('app')!).render(
   <React.StrictMode>
-    <ErrorBoundary>
-      <Router>
-        <Suspense fallback={<RouteLoading />}>
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/home" element={<Home />} />
-            <Route path="/create-vibe" element={<CreateVibe />} />
-            <Route path="/create-event" element={<CreateEvent />} />
-            <Route path="/event/:eventId" element={<EventDetail />} />
-            <Route path="/ticket-purchase/:eventId" element={<TicketPurchase />} />
-            <Route path="/ticket-success" element={<TicketSuccess />} />
-            <Route path="/profile" element={<Profile />} />
-            <Route path="/my-tickets" element={<MyTickets />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/signup" element={<SignUp />} />
-            <Route path="/ticket-scanner" element={<TicketScanner />} />
-            <Route path="/support" element={<Support />} />
-            <Route path="/discovery" element={<Discovery />} />
-            <Route path="/games" element={<Games />} />
-            <Route path="/messages" element={<Messages />} />
-            <Route path="/event-dashboard" element={<EventDashboard />} />
-            <Route path="/calendar" element={<Calendar />} />
-          </Routes>
-        </Suspense>
-      </Router>
-    </ErrorBoundary>
+    <HelmetProvider>
+      <ErrorBoundary>
+        <SEO />
+        <Router>
+          <Suspense fallback={<RouteLoading />}>
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/home" element={<Home />} />
+              <Route path="/create-vibe" element={<CreateVibe />} />
+              <Route path="/create-event" element={<CreateEvent />} />
+              <Route path="/event/:eventId" element={<EventDetail />} />
+              <Route path="/ticket-purchase/:eventId" element={<TicketPurchase />} />
+              <Route path="/ticket-success" element={<TicketSuccess />} />
+              <Route path="/profile" element={<Profile />} />
+              <Route path="/my-tickets" element={<MyTickets />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/signup" element={<SignUp />} />
+              <Route path="/ticket-scanner" element={<TicketScanner />} />
+              <Route path="/support" element={<Support />} />
+              <Route path="/discovery" element={<Discovery />} />
+              <Route path="/games" element={<Games />} />
+              <Route path="/messages" element={<Messages />} />
+              <Route path="/event-dashboard" element={<EventDashboard />} />
+              <Route path="/calendar" element={<Calendar />} />
+            </Routes>
+          </Suspense>
+        </Router>
+      </ErrorBoundary>
+    </HelmetProvider>
   </React.StrictMode>
 );

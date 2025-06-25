@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Bell, MessageCircle, Gamepad2, Globe, User, HelpCircle, X, Search, Calendar, MapPin, Zap, ChevronLeft, ChevronRight, Share, Heart, Plus, Minus, ArrowLeft } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import SEO from "../../components/SEO";
 
 export const Home = (): JSX.Element => {
   const navigate = useNavigate();
@@ -282,244 +283,251 @@ export const Home = (): JSX.Element => {
   // Home View
   if (currentView === 'home') {
     return (
-      <div className="min-h-screen bg-[#1a1a1a] flex relative overflow-hidden font-['Space_Grotesk']">
-        <Sidebar />
+      <>
+        <SEO 
+          title="Home"
+          description="Welcome to EVOKE - Discover amazing events, create your own vibes, and connect with communities. Find events, manage your schedule, and experience unforgettable moments."
+          keywords="events, discover events, create vibe, calendar, event management, social events"
+        />
+        <div className="min-h-screen bg-[#1a1a1a] flex relative overflow-hidden font-['Space_Grotesk']">
+          <Sidebar />
 
-        {/* Main Content */}
-        <div className="flex-1 ml-20 p-8 transition-all duration-500 ease-in-out">
-          {/* Header */}
-          <div className="flex justify-between items-start mb-12">
-            <div className="animate-fade-in">
-              <h1 className="text-4xl font-bold text-white mb-2">Welcome Solomon</h1>
-              <p className="text-xl text-gray-400">What would you like to do today?</p>
-            </div>
-
-            {/* User Profile */}
-            <div className="flex items-center space-x-4 animate-fade-in">
-              <div className="relative cursor-pointer group" onClick={toggleNotifications}>
-                <div className="w-12 h-12 bg-[#2a2a2a] hover:bg-[#3a3a3a] rounded-xl flex items-center justify-center transition-all duration-300 hover:scale-110">
-                  <Bell className="w-6 h-6 text-gray-400 group-hover:text-white" />
-                </div>
-                <div className="absolute -top-1 -right-1 w-5 h-5 bg-[#FC1924] rounded-full flex items-center justify-center animate-pulse">
-                  <span className="text-xs text-white font-bold">5</span>
-                </div>
+          {/* Main Content */}
+          <div className="flex-1 ml-20 p-8 transition-all duration-500 ease-in-out">
+            {/* Header */}
+            <div className="flex justify-between items-start mb-12">
+              <div className="animate-fade-in">
+                <h1 className="text-4xl font-bold text-white mb-2">Welcome Solomon</h1>
+                <p className="text-xl text-gray-400">What would you like to do today?</p>
               </div>
 
-              <div 
-                className="flex items-center space-x-3 bg-[#2a2a2a] rounded-xl px-4 py-2  hover:bg-[#3a3a3a] transition-all duration-300 cursor-pointer hover:scale-105"
-                onClick={() => handleCardClick('profile')}
-              >
-                <div className="w-10 h-10 bg-gradient-to-br from-purple-500 to-pink-500 rounded-full flex items-center justify-center">
-                  <span className="text-white font-bold text-lg">S</span>
+              {/* User Profile */}
+              <div className="flex items-center space-x-4 animate-fade-in">
+                <div className="relative cursor-pointer group" onClick={toggleNotifications}>
+                  <div className="w-12 h-12 bg-[#2a2a2a] hover:bg-[#3a3a3a] rounded-xl flex items-center justify-center transition-all duration-300 hover:scale-110">
+                    <Bell className="w-6 h-6 text-gray-400 group-hover:text-white" />
+                  </div>
+                  <div className="absolute -top-1 -right-1 w-5 h-5 bg-[#FC1924] rounded-full flex items-center justify-center animate-pulse">
+                    <span className="text-xs text-white font-bold">5</span>
+                  </div>
                 </div>
-                <div>
-                  <p className="text-white font-medium">Solomon</p>
-                  <p className="text-gray-400 text-sm">Creator</p>
+
+                <div 
+                  className="flex items-center space-x-3 bg-[#2a2a2a] rounded-xl px-4 py-2  hover:bg-[#3a3a3a] transition-all duration-300 cursor-pointer hover:scale-105"
+                  onClick={() => handleCardClick('profile')}
+                >
+                  <div className="w-10 h-10 bg-gradient-to-br from-purple-500 to-pink-500 rounded-full flex items-center justify-center">
+                    <span className="text-white font-bold text-lg">S</span>
+                  </div>
+                  <div>
+                    <p className="text-white font-medium">Solomon</p>
+                    <p className="text-gray-400 text-sm">Creator</p>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
 
-          {/* Promotional Slider */}
-          <div className="relative mb-12 animate-slide-up">
-            <div className="relative h-64 rounded-2xl overflow-hidden shadow-2xl">
-              <div 
-                className="flex transition-transform duration-700 ease-in-out h-full"
-                style={{ transform: `translateX(-${currentSlide * 100}%)` }}
-              >
-                {promoSlides.map((slide) => (
-                  <div key={slide.id} className="min-w-full h-full relative">
-                    <div 
-                      className="w-full h-full bg-cover bg-center relative"
-                      style={{ backgroundImage: `url(${slide.image})` }}
-                    >
-                      <div className="absolute inset-0 bg-gradient-to-r from-purple-600/80 to-pink-600/80"></div>
-                      <div className="relative z-10 p-8 h-full flex items-center justify-between">
-                        <div className="text-white max-w-md">
-                          <h2 className="text-4xl font-bold mb-4">{slide.title}</h2>
-                          <p className="text-lg mb-6 opacity-90">{slide.subtitle}</p>
-                          <button className="bg-[#FC1924] hover:bg-[#e01620] text-white px-8 py-3 rounded-lg font-semibold transition-all duration-300 hover:scale-105 hover:shadow-lg">
-                            {slide.cta}
-                          </button>
-                        </div>
-                        <div className="hidden md:block">
-                          <div className="w-64 h-40 bg-white/10 rounded-xl backdrop-blur-sm border border-white/20 flex items-center justify-center">
-                            <div className="text-white text-center">
-                              <div className="text-2xl font-bold mb-2">TIME</div>
-                              <div className="text-sm opacity-75">DATE</div>
-                              <div className="text-sm opacity-75">LOCATION</div>
+            {/* Promotional Slider */}
+            <div className="relative mb-12 animate-slide-up">
+              <div className="relative h-64 rounded-2xl overflow-hidden shadow-2xl">
+                <div 
+                  className="flex transition-transform duration-700 ease-in-out h-full"
+                  style={{ transform: `translateX(-${currentSlide * 100}%)` }}
+                >
+                  {promoSlides.map((slide) => (
+                    <div key={slide.id} className="min-w-full h-full relative">
+                      <div 
+                        className="w-full h-full bg-cover bg-center relative"
+                        style={{ backgroundImage: `url(${slide.image})` }}
+                      >
+                        <div className="absolute inset-0 bg-gradient-to-r from-purple-600/80 to-pink-600/80"></div>
+                        <div className="relative z-10 p-8 h-full flex items-center justify-between">
+                          <div className="text-white max-w-md">
+                            <h2 className="text-4xl font-bold mb-4">{slide.title}</h2>
+                            <p className="text-lg mb-6 opacity-90">{slide.subtitle}</p>
+                            <button className="bg-[#FC1924] hover:bg-[#e01620] text-white px-8 py-3 rounded-lg font-semibold transition-all duration-300 hover:scale-105 hover:shadow-lg">
+                              {slide.cta}
+                            </button>
+                          </div>
+                          <div className="hidden md:block">
+                            <div className="w-64 h-40 bg-white/10 rounded-xl backdrop-blur-sm border border-white/20 flex items-center justify-center">
+                              <div className="text-white text-center">
+                                <div className="text-2xl font-bold mb-2">TIME</div>
+                                <div className="text-sm opacity-75">DATE</div>
+                                <div className="text-sm opacity-75">LOCATION</div>
+                              </div>
                             </div>
                           </div>
                         </div>
                       </div>
                     </div>
-                  </div>
-                ))}
-              </div>
-              
-              {/* Slider Controls */}
-              <button 
-                onClick={prevSlide}
-                className="absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 bg-white/20 hover:bg-white/30 rounded-full flex items-center justify-center backdrop-blur-sm transition-all duration-300 hover:scale-110"
-              >
-                <ChevronLeft className="w-6 h-6 text-white" />
-              </button>
-              <button 
-                onClick={nextSlide}
-                className="absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 bg-white/20 hover:bg-white/30 rounded-full flex items-center justify-center backdrop-blur-sm transition-all duration-300 hover:scale-110"
-              >
-                <ChevronRight className="w-6 h-6 text-white" />
-              </button>
-
-              {/* Slider Indicators */}
-              <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex space-x-2">
-                {promoSlides.map((_, index) => (
-                  <button
-                    key={index}
-                    onClick={() => setCurrentSlide(index)}
-                    className={`w-3 h-3 rounded-full transition-all duration-300 ${
-                      index === currentSlide ? 'bg-white scale-125' : 'bg-white/50'
-                    }`}
-                  />
-                ))}
-              </div>
-            </div>
-          </div>
-
-          {/* Feature Cards Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 animate-slide-up">
-            <div 
-              className="relative overflow-hidden rounded-2xl cursor-pointer transition-all duration-300 hover:scale-105 hover:shadow-2xl bg-gradient-to-br from-slate-100 to-gray-200 border-2 border-black group"
-              onClick={() => handleCardClick('events')}
-            >
-              <div className="h-64 p-6 flex flex-col justify-between relative">
-                <div className="relative z-10">
-                  <span className="text-gray-700 text-sm font-medium uppercase tracking-wider">EVENTS</span>
-                  <h3 className="text-gray-900 text-2xl font-bold mt-2 mb-1">FIND EVENTS</h3>
-                  <p className="text-gray-600 text-sm">Discover nearby events</p>
+                  ))}
                 </div>
-                <div className="absolute bottom-4 right-4 w-16 h-16 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-                  <div className="w-12 h-12 bg-gradient-to-br from-purple-500 to-pink-500 rounded-xl flex items-center justify-center">
-                    <Search className="w-6 h-6 text-white" />
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div 
-              className="relative overflow-hidden rounded-2xl cursor-pointer transition-all duration-300 hover:scale-105 hover:shadow-2xl bg-gradient-to-br from-blue-100 to-cyan-200 border-2 border-black group"
-              onClick={() => handleCardClick('create-vibe')}
-            >
-              <div className="h-64 p-6 flex flex-col justify-between relative">
-                <div className="relative z-10">
-                  <span className="text-blue-800 text-sm font-medium uppercase tracking-wider">SOCIAL</span>
-                  <h3 className="text-blue-900 text-2xl font-bold mt-2 mb-1">CREATE VIBE</h3>
-                  <p className="text-blue-700 text-sm">Start your own vibe</p>
-                </div>
-                <div className="absolute bottom-4 right-4 w-16 h-16 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-                  <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-cyan-500 rounded-xl flex items-center justify-center">
-                    <Zap className="w-6 h-6 text-white" />
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div className="relative overflow-hidden rounded-2xl cursor-pointer transition-all duration-300 hover:scale-105 hover:shadow-2xl bg-gradient-to-br from-purple-100 to-pink-200 border-2 border-black group">
-              <div className="h-64 p-6 flex flex-col justify-between relative">
-                <div className="relative z-10">
-                  <span className="text-purple-800 text-sm font-medium uppercase tracking-wider">SOCIAL</span>
-                  <h3 className="text-purple-900 text-2xl font-bold mt-2 mb-1">FIND A VIBE</h3>
-                  <p className="text-purple-700 text-sm">Join existing vibes</p>
-                </div>
-                <div className="absolute bottom-4 right-4 w-16 h-16 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-                  <div className="w-12 h-12 bg-gradient-to-br from-purple-500 to-pink-500 rounded-xl flex items-center justify-center">
-                    <User className="w-6 h-6 text-white" />
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div 
-              className="relative overflow-hidden rounded-2xl cursor-pointer transition-all duration-300 hover:scale-105 hover:shadow-2xl bg-gradient-to-br from-green-100 to-emerald-200 border-2 border-black group"
-              onClick={() => handleCardClick('calendar')}
-            >
-              <div className="h-64 p-6 flex flex-col justify-between relative">
-                <div className="relative z-10">
-                  <span className="text-green-800 text-sm font-medium uppercase tracking-wider">PLANNING</span>
-                  <h3 className="text-green-900 text-2xl font-bold mt-2 mb-1">CALENDAR</h3>
-                  <p className="text-green-700 text-sm">Manage your schedule</p>
-                </div>
-                <div className="absolute bottom-4 right-4 w-16 h-16 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-                  <div className="w-12 h-12 bg-gradient-to-br from-green-500 to-emerald-500 rounded-xl flex items-center justify-center">
-                    <Calendar className="w-6 h-6 text-white" />
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Notification Panel */}
-        <div className={`fixed top-0 right-0 h-full w-96 bg-white shadow-2xl transform transition-transform duration-300 ease-in-out z-50 ${
-          showNotifications ? 'translate-x-0' : 'translate-x-full'
-        }`}>
-          <div className="p-6 border-b border-gray-200">
-            <div className="flex items-center justify-between">
-              <h2 className="text-2xl font-bold text-gray-900">Notifications</h2>
-              <button 
-                onClick={toggleNotifications}
-                className="w-8 h-8 bg-gray-100 hover:bg-gray-200 rounded-full flex items-center justify-center transition-colors duration-200"
-              >
-                <X className="w-5 h-5 text-gray-600" />
-              </button>
-            </div>
-          </div>
-          
-          <div className="overflow-y-auto h-full pb-20">
-            <div className="p-4 space-y-4">
-              {notifications.map((notification, index) => (
-                <div 
-                  key={notification.id} 
-                  className="bg-gray-50 hover:bg-gray-100 rounded-xl p-4 transition-all duration-200 cursor-pointer border border-gray-200 hover:border-gray-300 animate-slide-in"
-                  style={{ animationDelay: `${index * 0.1}s` }}
+                
+                {/* Slider Controls */}
+                <button 
+                  onClick={prevSlide}
+                  className="absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 bg-white/20 hover:bg-white/30 rounded-full flex items-center justify-center backdrop-blur-sm transition-all duration-300 hover:scale-110"
                 >
-                  <div className="flex items-start space-x-3">
-                    {getNotificationIcon(notification.type)}
-                    <div className="flex-1 min-w-0">
-                      <h4 className="text-sm font-semibold text-gray-900 mb-1">{notification.title}</h4>
-                      <p className="text-sm text-gray-600 mb-2">{notification.subtitle}</p>
-                      <p className="text-xs text-gray-400">{notification.time}</p>
-                      {notification.actions && (
-                        <div className="flex space-x-2 mt-3">
-                          {notification.actions.map((action, actionIndex) => (
-                            <button
-                              key={actionIndex}
-                              className={`px-3 py-1 text-xs font-medium rounded-lg transition-colors duration-200 ${
-                                action === 'Accept' || action === 'View'
-                                  ? 'bg-[#FC1924] text-white hover:bg-[#e01620]'
-                                  : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
-                              }`}
-                            >
-                              {action}
-                            </button>
-                          ))}
-                        </div>
-                      )}
+                  <ChevronLeft className="w-6 h-6 text-white" />
+                </button>
+                <button 
+                  onClick={nextSlide}
+                  className="absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 bg-white/20 hover:bg-white/30 rounded-full flex items-center justify-center backdrop-blur-sm transition-all duration-300 hover:scale-110"
+                >
+                  <ChevronRight className="w-6 h-6 text-white" />
+                </button>
+
+                {/* Slider Indicators */}
+                <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex space-x-2">
+                  {promoSlides.map((_, index) => (
+                    <button
+                      key={index}
+                      onClick={() => setCurrentSlide(index)}
+                      className={`w-3 h-3 rounded-full transition-all duration-300 ${
+                        index === currentSlide ? 'bg-white scale-125' : 'bg-white/50'
+                      }`}
+                    />
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            {/* Feature Cards Grid */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 animate-slide-up">
+              <div 
+                className="relative overflow-hidden rounded-2xl cursor-pointer transition-all duration-300 hover:scale-105 hover:shadow-2xl bg-gradient-to-br from-slate-100 to-gray-200 border-2 border-black group"
+                onClick={() => handleCardClick('events')}
+              >
+                <div className="h-64 p-6 flex flex-col justify-between relative">
+                  <div className="relative z-10">
+                    <span className="text-gray-700 text-sm font-medium uppercase tracking-wider">EVENTS</span>
+                    <h3 className="text-gray-900 text-2xl font-bold mt-2 mb-1">FIND EVENTS</h3>
+                    <p className="text-gray-600 text-sm">Discover nearby events</p>
+                  </div>
+                  <div className="absolute bottom-4 right-4 w-16 h-16 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                    <div className="w-12 h-12 bg-gradient-to-br from-purple-500 to-pink-500 rounded-xl flex items-center justify-center">
+                      <Search className="w-6 h-6 text-white" />
                     </div>
                   </div>
                 </div>
-              ))}
+              </div>
+
+              <div 
+                className="relative overflow-hidden rounded-2xl cursor-pointer transition-all duration-300 hover:scale-105 hover:shadow-2xl bg-gradient-to-br from-blue-100 to-cyan-200 border-2 border-black group"
+                onClick={() => handleCardClick('create-vibe')}
+              >
+                <div className="h-64 p-6 flex flex-col justify-between relative">
+                  <div className="relative z-10">
+                    <span className="text-blue-800 text-sm font-medium uppercase tracking-wider">SOCIAL</span>
+                    <h3 className="text-blue-900 text-2xl font-bold mt-2 mb-1">CREATE VIBE</h3>
+                    <p className="text-blue-700 text-sm">Start your own vibe</p>
+                  </div>
+                  <div className="absolute bottom-4 right-4 w-16 h-16 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                    <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-cyan-500 rounded-xl flex items-center justify-center">
+                      <Zap className="w-6 h-6 text-white" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="relative overflow-hidden rounded-2xl cursor-pointer transition-all duration-300 hover:scale-105 hover:shadow-2xl bg-gradient-to-br from-purple-100 to-pink-200 border-2 border-black group">
+                <div className="h-64 p-6 flex flex-col justify-between relative">
+                  <div className="relative z-10">
+                    <span className="text-purple-800 text-sm font-medium uppercase tracking-wider">SOCIAL</span>
+                    <h3 className="text-purple-900 text-2xl font-bold mt-2 mb-1">FIND A VIBE</h3>
+                    <p className="text-purple-700 text-sm">Join existing vibes</p>
+                  </div>
+                  <div className="absolute bottom-4 right-4 w-16 h-16 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                    <div className="w-12 h-12 bg-gradient-to-br from-purple-500 to-pink-500 rounded-xl flex items-center justify-center">
+                      <User className="w-6 h-6 text-white" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div 
+                className="relative overflow-hidden rounded-2xl cursor-pointer transition-all duration-300 hover:scale-105 hover:shadow-2xl bg-gradient-to-br from-green-100 to-emerald-200 border-2 border-black group"
+                onClick={() => handleCardClick('calendar')}
+              >
+                <div className="h-64 p-6 flex flex-col justify-between relative">
+                  <div className="relative z-10">
+                    <span className="text-green-800 text-sm font-medium uppercase tracking-wider">PLANNING</span>
+                    <h3 className="text-green-900 text-2xl font-bold mt-2 mb-1">CALENDAR</h3>
+                    <p className="text-green-700 text-sm">Manage your schedule</p>
+                  </div>
+                  <div className="absolute bottom-4 right-4 w-16 h-16 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                    <div className="w-12 h-12 bg-gradient-to-br from-green-500 to-emerald-500 rounded-xl flex items-center justify-center">
+                      <Calendar className="w-6 h-6 text-white" />
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
-        </div>
 
-        {showNotifications && (
-          <div 
-            className="fixed inset-0 bg-black bg-opacity-50 z-40 transition-opacity duration-300"
-            onClick={toggleNotifications}
-          />
-        )}
-      </div>
+          {/* Notification Panel */}
+          <div className={`fixed top-0 right-0 h-full w-96 bg-white shadow-2xl transform transition-transform duration-300 ease-in-out z-50 ${
+            showNotifications ? 'translate-x-0' : 'translate-x-full'
+          }`}>
+            <div className="p-6 border-b border-gray-200">
+              <div className="flex items-center justify-between">
+                <h2 className="text-2xl font-bold text-gray-900">Notifications</h2>
+                <button 
+                  onClick={toggleNotifications}
+                  className="w-8 h-8 bg-gray-100 hover:bg-gray-200 rounded-full flex items-center justify-center transition-colors duration-200"
+                >
+                  <X className="w-5 h-5 text-gray-600" />
+                </button>
+              </div>
+            </div>
+            
+            <div className="overflow-y-auto h-full pb-20">
+              <div className="p-4 space-y-4">
+                {notifications.map((notification, index) => (
+                  <div 
+                    key={notification.id} 
+                    className="bg-gray-50 hover:bg-gray-100 rounded-xl p-4 transition-all duration-200 cursor-pointer border border-gray-200 hover:border-gray-300 animate-slide-in"
+                    style={{ animationDelay: `${index * 0.1}s` }}
+                  >
+                    <div className="flex items-start space-x-3">
+                      {getNotificationIcon(notification.type)}
+                      <div className="flex-1 min-w-0">
+                        <h4 className="text-sm font-semibold text-gray-900 mb-1">{notification.title}</h4>
+                        <p className="text-sm text-gray-600 mb-2">{notification.subtitle}</p>
+                        <p className="text-xs text-gray-400">{notification.time}</p>
+                        {notification.actions && (
+                          <div className="flex space-x-2 mt-3">
+                            {notification.actions.map((action, actionIndex) => (
+                              <button
+                                key={actionIndex}
+                                className={`px-3 py-1 text-xs font-medium rounded-lg transition-colors duration-200 ${
+                                  action === 'Accept' || action === 'View'
+                                    ? 'bg-[#FC1924] text-white hover:bg-[#e01620]'
+                                    : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+                                }`}
+                              >
+                                {action}
+                              </button>
+                            ))}
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          {showNotifications && (
+            <div 
+              className="fixed inset-0 bg-black bg-opacity-50 z-40 transition-opacity duration-300"
+              onClick={toggleNotifications}
+            />
+          )}
+        </div>
+      </>
     );
   }
 
