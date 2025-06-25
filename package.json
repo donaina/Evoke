@@ -15,11 +15,16 @@
   "license": "MIT",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "build": "tsc && vite build",
+    "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
     "postbuild": "react-snap",
     "analyze": "vite-bundle-analyzer",
-    "lighthouse": "lighthouse http://localhost:4173 --output html --output-path ./lighthouse-report.html"
+    "lighthouse": "lighthouse http://localhost:4173 --output html --output-path ./lighthouse-report.html",
+    "test": "vitest",
+    "test:ui": "vitest --ui",
+    "test:run": "vitest run",
+    "test:coverage": "vitest run --coverage"
   },
   "dependencies": {
     "@radix-ui/react-checkbox": "^1.1.2",
@@ -32,19 +37,27 @@
     "react-dom": "^18.2.0",
     "react-helmet-async": "^2.0.5",
     "react-router-dom": "^6.8.1",
-    "tailwind-merge": "2.5.4"
+    "tailwind-merge": "2.5.4",
+    "zustand": "^5.0.5"
   },
   "devDependencies": {
+    "@testing-library/jest-dom": "^6.6.3",
+    "@testing-library/react": "^16.3.0",
+    "@testing-library/user-event": "^14.6.1",
     "@types/react": "18.2.0",
     "@types/react-dom": "18.2.0",
     "@vitejs/plugin-react": "4.3.4",
+    "@vitest/ui": "^3.2.4",
     "esbuild": "^0.25.5",
     "globals": "15.12.0",
+    "jsdom": "^26.1.0",
     "lighthouse": "^11.7.1",
     "react-snap": "^1.23.0",
     "tailwindcss": "3.4.16",
+    "typescript": "^5.8.3",
     "vite": "^6.3.5",
-    "vite-bundle-analyzer": "^0.7.0"
+    "vite-bundle-analyzer": "^0.7.0",
+    "vitest": "^3.2.4"
   },
   "alias": {
     "@/*": "./src/components/ui/$1"
