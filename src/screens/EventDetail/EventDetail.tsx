@@ -36,6 +36,7 @@ export const EventDetail = (): JSX.Element => {
   const [event, setEvent] = useState<EventData | null>(null);
   const [isLiked, setIsLiked] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const [showCopiedMessage, setShowCopiedMessage] = useState(false);
 
   useEffect(() => {
     // Simulate API call
@@ -92,6 +93,16 @@ export const EventDetail = (): JSX.Element => {
     fetchEvent();
   }, [eventId]);
 
+  // Hide copied message after 3 seconds
+  useEffect(() => {
+    if (showCopiedMessage) {
+      const timer = setTimeout(() => {
+        setShowCopiedMessage(false);
+      }, 3000);
+      return () => clearTimeout(timer);
+    }
+  }, [showCopiedMessage]);
+
   const handleBuyTicket = () => {
     navigate(`/ticket-purchase/${eventId}`);
   };
@@ -107,7 +118,7 @@ export const EventDetail = (): JSX.Element => {
     } else {
       // Fallback: copy to clipboard
       navigator.clipboard.writeText(window.location.href);
-      alert('Event link copied to clipboard!');
+      setShowCopiedMessage(true);
     }
   };
 
@@ -143,6 +154,18 @@ export const EventDetail = (): JSX.Element => {
 
   return (
     <div className="min-h-screen bg-[#1a1a1a] font-['Space_Grotesk']">
+      {/* Copied Message Notification */}
+      {showCopiedMessage && (
+        <div className="fixed top-6 left-1/2 transform -translate-x-1/2 z-50 bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg animate-fade-in">
+          <div className="flex items-center space-x-2">
+            <div className="w-4 h-4 bg-white rounded-full flex items-center justify-center">
+              <span className="text-green-500 text-xs">✓</span>
+            </div>
+            <span>Event link copied to clipboard!</span>
+          </div>
+        </div>
+      )}
+
       {/* Header */}
       <div className="relative h-96">
         <div 
