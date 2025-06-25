@@ -36,6 +36,8 @@ export class ErrorBoundary extends Component<Props, State> {
   };
 
   handleGoHome = () => {
+    // Use window.location for navigation since this is a class component
+    // In a real app, you might want to use a different approach
     window.location.href = '/home';
   };
 
@@ -61,7 +63,7 @@ export class ErrorBoundary extends Component<Props, State> {
                 We encountered an unexpected error. Don't worry, our team has been notified and is working to fix it.
               </p>
 
-              {process.env.NODE_ENV === 'development' && this.state.error && (
+              {typeof window !== 'undefined' && window.location.hostname === 'localhost' && this.state.error && (
                 <details className="mb-6 text-left">
                   <summary className="text-red-400 cursor-pointer mb-2">
                     Error Details (Development)

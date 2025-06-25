@@ -45,12 +45,29 @@ export const TicketSuccess = (): JSX.Element => {
 
   const handleDownloadTicket = (ticketId: string) => {
     // In a real app, this would generate and download a PDF
-    console.log(`Downloading ticket ${ticketId}`);
+    try {
+      // Simulate download process
+      console.info(`Downloading ticket ${ticketId}...`);
+      // TODO: Implement actual PDF generation and download
+      // For now, show a success message
+      alert('Ticket download started! (Feature coming soon)');
+    } catch (error) {
+      console.error('Download failed:', error);
+      alert('Download failed. Please try again.');
+    }
   };
 
   const handleShareTicket = (ticketId: string) => {
     // In a real app, this would share the ticket
-    console.log(`Sharing ticket ${ticketId}`);
+    try {
+      console.info(`Sharing ticket ${ticketId}...`);
+      // TODO: Implement actual sharing functionality
+      // For now, show a success message
+      alert('Share feature coming soon!');
+    } catch (error) {
+      console.error('Share failed:', error);
+      alert('Share failed. Please try again.');
+    }
   };
 
   return (

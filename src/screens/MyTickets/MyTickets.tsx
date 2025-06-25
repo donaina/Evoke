@@ -76,12 +76,26 @@ export const MyTickets = (): JSX.Element => {
 
   const handleDownloadTicket = (ticketId: string) => {
     // In a real app, this would generate and download a PDF
-    console.log(`Downloading ticket ${ticketId}`);
+    try {
+      console.info(`Downloading ticket ${ticketId}...`);
+      // TODO: Implement actual PDF generation and download
+      alert('Ticket download started! (Feature coming soon)');
+    } catch (error) {
+      console.error('Download failed:', error);
+      alert('Download failed. Please try again.');
+    }
   };
 
   const handleShareTicket = (ticketId: string) => {
     // In a real app, this would share the ticket
-    console.log(`Sharing ticket ${ticketId}`);
+    try {
+      console.info(`Sharing ticket ${ticketId}...`);
+      // TODO: Implement actual sharing functionality
+      alert('Share feature coming soon!');
+    } catch (error) {
+      console.error('Share failed:', error);
+      alert('Share failed. Please try again.');
+    }
   };
 
   const handleTransferTicket = (ticket: Ticket) => {
@@ -93,15 +107,23 @@ export const MyTickets = (): JSX.Element => {
     if (!selectedTicket || !transferEmail.trim()) return;
 
     // Simulate transfer process
-    await new Promise(resolve => setTimeout(resolve, 2000));
-    
-    // In a real app, this would call the API to transfer the ticket
-    console.log(`Transferring ticket ${selectedTicket.id} to ${transferEmail}`);
-    
-    setShowTransferModal(false);
-    setSelectedTicket(null);
-    setTransferEmail('');
-    setTransferMessage('');
+    try {
+      await new Promise(resolve => setTimeout(resolve, 2000));
+      
+      // In a real app, this would call the API to transfer the ticket
+      console.info(`Transferring ticket ${selectedTicket.id} to ${transferEmail}`);
+      
+      // Show success message
+      alert(`Ticket successfully transferred to ${transferEmail}!`);
+      
+      setShowTransferModal(false);
+      setSelectedTicket(null);
+      setTransferEmail('');
+      setTransferMessage('');
+    } catch (error) {
+      console.error('Transfer failed:', error);
+      alert('Transfer failed. Please try again.');
+    }
   };
 
   const getStatusColor = (status: string) => {
