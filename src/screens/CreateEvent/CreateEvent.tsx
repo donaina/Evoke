@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { ArrowLeft, Upload, Plus, X, Check } from "lucide-react";
+import { ArrowLeft, Upload, Plus, X, Check, MessageCircle, Gamepad2, Globe, User, HelpCircle } from "lucide-react";
 
 interface EventData {
   name: string;
@@ -152,7 +152,7 @@ export const CreateEvent = (): JSX.Element | null => {
           onClick={() => navigate('/messages')}
         >
           <div className="w-12 h-12 bg-gray-100 hover:bg-pink-100 rounded-xl flex items-center justify-center transition-all duration-300 hover:scale-110 hover:shadow-lg">
-            <div className="w-6 h-6 text-gray-600 group-hover:text-pink-600">💬</div>
+            <MessageCircle className="w-6 h-6 text-gray-600 group-hover:text-pink-600" />
           </div>
           <div className="absolute -top-1 -right-1 w-5 h-5 bg-[#FC1924] rounded-full flex items-center justify-center animate-pulse">
             <span className="text-xs text-white font-bold">2</span>
@@ -164,7 +164,7 @@ export const CreateEvent = (): JSX.Element | null => {
           onClick={() => navigate('/games')}
         >
           <div className="w-12 h-12 bg-gray-100 hover:bg-purple-100 rounded-xl flex items-center justify-center transition-all duration-300 hover:scale-110 hover:shadow-lg">
-            <div className="w-6 h-6 text-gray-600 group-hover:text-purple-600">🎮</div>
+            <Gamepad2 className="w-6 h-6 text-gray-600 group-hover:text-purple-600" />
           </div>
         </div>
 
@@ -173,7 +173,7 @@ export const CreateEvent = (): JSX.Element | null => {
           onClick={() => navigate('/discovery')}
         >
           <div className="w-12 h-12 bg-gray-100 hover:bg-blue-100 rounded-xl flex items-center justify-center transition-all duration-300 hover:scale-110 hover:shadow-lg">
-            <div className="w-6 h-6 text-gray-600 group-hover:text-blue-600">🌐</div>
+            <Globe className="w-6 h-6 text-gray-600 group-hover:text-blue-600" />
           </div>
         </div>
 
@@ -182,7 +182,7 @@ export const CreateEvent = (): JSX.Element | null => {
           onClick={() => navigate('/profile')}
         >
           <div className="w-12 h-12 bg-gray-100 hover:bg-orange-100 rounded-xl flex items-center justify-center transition-all duration-300 hover:scale-110 hover:shadow-lg">
-            <div className="w-6 h-6 text-gray-600 group-hover:text-orange-600">👤</div>
+            <User className="w-6 h-6 text-gray-600 group-hover:text-orange-600" />
           </div>
         </div>
 
@@ -191,7 +191,7 @@ export const CreateEvent = (): JSX.Element | null => {
           onClick={() => navigate('/support')}
         >
           <div className="w-12 h-12 bg-gray-100 hover:bg-yellow-100 rounded-xl flex items-center justify-center transition-all duration-300 hover:scale-110 hover:shadow-lg">
-            <div className="w-6 h-6 text-gray-600 group-hover:text-yellow-600">❓</div>
+            <HelpCircle className="w-6 h-6 text-gray-600 group-hover:text-yellow-600" />
           </div>
         </div>
       </div>
