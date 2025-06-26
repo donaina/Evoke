@@ -261,7 +261,7 @@ export const CreateEvent = (): JSX.Element | null => {
         </div>
 
         {/* Right Side - Form */}
-        <div className="flex-1 ml-[50%] p-8 flex items-center">
+        <div className="flex-1 ml-[calc(50%+80px)] p-8 flex items-center">
           <div className="w-full max-w-lg animate-slide-in-right">
             <button 
               onClick={handleBackToCreateVibe}
@@ -366,7 +366,7 @@ export const CreateEvent = (): JSX.Element | null => {
         </div>
 
         {/* Right Side - Form */}
-        <div className="flex-1 ml-[50%] p-8 flex items-center">
+        <div className="flex-1 ml-[calc(50%+80px)] p-8 flex items-center">
           <div className="w-full max-w-lg animate-slide-in-right">
             <h2 className="text-3xl font-bold text-white mb-8">Create Details</h2>
 
@@ -519,7 +519,7 @@ export const CreateEvent = (): JSX.Element | null => {
         </div>
 
         {/* Right Side - Form */}
-        <div className="flex-1 ml-[50%] p-8 flex items-center">
+        <div className="flex-1 ml-[calc(50%+80px)] p-8 flex items-center">
           <div className="w-full max-w-lg animate-slide-in-right">
             <h2 className="text-3xl font-bold text-white mb-8">Ticketing</h2>
 
@@ -691,7 +691,7 @@ export const CreateEvent = (): JSX.Element | null => {
         </div>
 
         {/* Right Side - Summary */}
-        <div className="flex-1 ml-[50%] p-8 flex items-center">
+        <div className="flex-1 ml-[calc(50%+80px)] p-8 flex items-center">
           <div className="w-full max-w-lg animate-slide-in-right">
             <h2 className="text-3xl font-bold text-white mb-8">Event Summary</h2>
 
