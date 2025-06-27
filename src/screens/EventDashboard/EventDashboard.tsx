@@ -1,9 +1,112 @@
-import React from "react";
-import { useNavigate } from "react-router-dom";
-import { ArrowLeft, Gamepad2 } from "lucide-react";
+import React, { useState, useEffect } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import { 
+  ArrowLeft, 
+  Users, 
+  Ticket, 
+  DollarSign, 
+  TrendingUp, 
+  Calendar, 
+  MapPin, 
+  Clock,
+  QrCode,
+  Download,
+  Edit,
+  Share,
+  Bell,
+  CheckCircle,
+  XCircle,
+  Search,
+  Filter,
+  MessageCircle,
+  Gamepad2,
+  Globe,
+  User,
+  HelpCircle,
+  BarChart3,
+  Settings,
+  Eye,
+  EyeOff
+} from "lucide-react";
+
+interface Attendee {
+  id: string;
+  name: string;
+  email: string;
+  ticketType: string;
+  purchaseDate: string;
+  checkInStatus: 'checked-in' | 'not-checked-in' | 'cancelled';
+  checkInTime?: string;
+  amount: number;
+}
+
+interface TicketType {
+  name: string;
+  price: number;
+  sold: number;
+  total: number;
+  revenue: number;
+}
+
+interface EventStats {
+  totalAttendees: number;
+  checkedIn: number;
+  totalRevenue: number;
+  ticketsSold: number;
+  totalCapacity: number;
+  checkInRate: number;
+}
 
 export const EventDashboard = (): JSX.Element => {
   const navigate = useNavigate();
+  const { eventId } = useParams();
+  const [activeTab, setActiveTab] = useState('overview');
+  const [searchTerm, setSearchTerm] = useState('');
+  const [filterStatus, setFilterStatus] = useState('all');
+  const [showQRCode, setShowQRCode] = useState(false);
+  const [isLive, setIsLive] = useState(true);
+
+  // Mock data - in real app this would come from API
+  const eventData = {
+    id: eventId || '1',
+    name: 'Wet & Wild Summer Party',
+    date: '2025-06-15',
+    time: '8:00 PM',
+    location: '252b Ikoroduc cresent Dolphin estate Ikoyi',
+    status: 'active',
+    capacity: 500,
+    image: 'https://images.pexels.com/photos/1190298/pexels-photo-1190298.jpeg?auto=compress&cs=tinysrgb&w=800'
+  };
+
+  const stats: EventStats = {
+    totalAttendees: 342,
+    checkedIn: 287,
+    totalRevenue: 2850000,
+    ticketsSold: 342,
+    totalCapacity: 500,
+    checkInRate: 84
+  };
+
+  const ticketTypes: TicketType[] = [
+    { name: 'Regular', price: 5000, sold: 200, total: 300, revenue: 1000000 },
+    { name: 'VIP', price: 10000, sold: 100, total: 150, revenue: 1000000 },
+    { name: 'Premium', price: 15000, sold: 42, total: 50, revenue: 630000 }
+  ];
+
+  const attendees: Attendee[] = [
+    { id: '1', name: 'John Doe', email: 'john@example.com', ticketType: 'VIP', purchaseDate: '2025-01-10', checkInStatus: 'checked-in', checkInTime: '2025-06-15 19:30', amount: 10000 },
+    { id: '2', name: 'Jane Smith', email: 'jane@example.com', ticketType: 'Regular', purchaseDate: '2025-01-12', checkInStatus: 'checked-in', checkInTime: '2025-06-15 20:15', amount: 5000 },
+    { id: '3', name: 'Mike Johnson', email: 'mike@example.com', ticketType: 'Premium', purchaseDate: '2025-01-15', checkInStatus: 'not-checked-in', amount: 15000 },
+    { id: '4', name: 'Sarah Wilson', email: 'sarah@example.com', ticketType: 'Regular', purchaseDate: '2025-01-18', checkInStatus: 'cancelled', amount: 5000 },
+    { id: '5', name: 'David Brown', email: 'david@example.com', ticketType: 'VIP', purchaseDate: '2025-01-20', checkInStatus: 'checked-in', checkInTime: '2025-06-15 21:00', amount: 10000 }
+  ];
+
+  const filteredAttendees = attendees.filter(attendee => {
+    const matchesSearch = attendee.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                         attendee.email.toLowerCase().includes(searchTerm.toLowerCase());
+    const matchesFilter = filterStatus === 'all' || attendee.checkInStatus === filterStatus;
+    return matchesSearch && matchesFilter;
+  });
 
   // Sidebar Component
   const Sidebar = () => (
@@ -21,7 +124,7 @@ export const EventDashboard = (): JSX.Element => {
           onClick={() => navigate('/messages')}
         >
           <div className="w-12 h-12 bg-gray-100 hover:bg-pink-100 rounded-xl flex items-center justify-center transition-all duration-300 hover:scale-110 hover:shadow-lg">
-            <div className="w-6 h-6 text-gray-600 group-hover:text-pink-600">💬</div>
+            <MessageCircle className="w-6 h-6 text-gray-600 group-hover:text-pink-600" />
           </div>
           <div className="absolute -top-1 -right-1 w-5 h-5 bg-[#FC1924] rounded-full flex items-center justify-center animate-pulse">
             <span className="text-xs text-white font-bold">2</span>
@@ -32,8 +135,8 @@ export const EventDashboard = (): JSX.Element => {
           className="group cursor-pointer"
           onClick={() => navigate('/games')}
         >
-          <div className="w-12 h-12 bg-purple-100 rounded-xl flex items-center justify-center transition-all duration-300 hover:scale-110 hover:shadow-lg">
-            <div className="w-6 h-6 text-purple-600">🎮</div>
+          <div className="w-12 h-12 bg-gray-100 hover:bg-purple-100 rounded-xl flex items-center justify-center transition-all duration-300 hover:scale-110 hover:shadow-lg">
+            <Gamepad2 className="w-6 h-6 text-gray-600 group-hover:text-purple-600" />
           </div>
         </div>
 
@@ -42,7 +145,7 @@ export const EventDashboard = (): JSX.Element => {
           onClick={() => navigate('/discovery')}
         >
           <div className="w-12 h-12 bg-gray-100 hover:bg-blue-100 rounded-xl flex items-center justify-center transition-all duration-300 hover:scale-110 hover:shadow-lg">
-            <div className="w-6 h-6 text-gray-600 group-hover:text-blue-600">🌐</div>
+            <Globe className="w-6 h-6 text-gray-600 group-hover:text-blue-600" />
           </div>
         </div>
 
@@ -51,7 +154,7 @@ export const EventDashboard = (): JSX.Element => {
           onClick={() => navigate('/profile')}
         >
           <div className="w-12 h-12 bg-gray-100 hover:bg-orange-100 rounded-xl flex items-center justify-center transition-all duration-300 hover:scale-110 hover:shadow-lg">
-            <div className="w-6 h-6 text-gray-600 group-hover:text-orange-600">👤</div>
+            <User className="w-6 h-6 text-gray-600 group-hover:text-orange-600" />
           </div>
         </div>
 
@@ -60,53 +163,391 @@ export const EventDashboard = (): JSX.Element => {
           onClick={() => navigate('/support')}
         >
           <div className="w-12 h-12 bg-gray-100 hover:bg-yellow-100 rounded-xl flex items-center justify-center transition-all duration-300 hover:scale-110 hover:shadow-lg">
-            <div className="w-6 h-6 text-gray-600 group-hover:text-yellow-600">❓</div>
+            <HelpCircle className="w-6 h-6 text-gray-600 group-hover:text-yellow-600" />
           </div>
         </div>
       </div>
     </div>
   );
 
+  const getStatusColor = (status: string) => {
+    switch (status) {
+      case 'checked-in': return 'text-green-500 bg-green-100';
+      case 'not-checked-in': return 'text-yellow-500 bg-yellow-100';
+      case 'cancelled': return 'text-red-500 bg-red-100';
+      default: return 'text-gray-500 bg-gray-100';
+    }
+  };
+
+  const getStatusIcon = (status: string) => {
+    switch (status) {
+      case 'checked-in': return <CheckCircle className="w-4 h-4" />;
+      case 'not-checked-in': return <Clock className="w-4 h-4" />;
+      case 'cancelled': return <XCircle className="w-4 h-4" />;
+      default: return <Clock className="w-4 h-4" />;
+    }
+  };
+
+  const formatCurrency = (amount: number) => {
+    return new Intl.NumberFormat('en-NG', {
+      style: 'currency',
+      currency: 'NGN',
+      minimumFractionDigits: 0
+    }).format(amount);
+  };
+
   return (
     <div className="min-h-screen bg-[#1a1a1a] flex relative overflow-hidden font-['Space_Grotesk']">
       <Sidebar />
 
       {/* Main Content */}
-      <div className="flex-1 ml-20 flex items-center justify-center">
-        <div className="text-center animate-fade-in">
-          {/* Back Button */}
-          <button 
-            onClick={() => navigate('/home')}
-            className="absolute top-8 left-28 flex items-center space-x-2 text-white/80 hover:text-white transition-colors duration-200"
-          >
-            <ArrowLeft className="w-5 h-5" />
-            <span>Back to Home</span>
-          </button>
-
-          {/* Coming Soon Content */}
-          <div className="animate-bounce">
-            <div className="w-32 h-32 bg-gradient-to-br from-purple-500 to-pink-500 rounded-full flex items-center justify-center mx-auto mb-8 shadow-2xl">
-              <Gamepad2 className="w-16 h-16 text-white" />
+      <div className="flex-1 ml-20 p-8">
+        {/* Header */}
+        <div className="flex justify-between items-start mb-8">
+          <div className="flex items-center space-x-4">
+            <button 
+              onClick={() => navigate('/home')}
+              className="flex items-center space-x-2 text-white/80 hover:text-white transition-colors duration-200"
+            >
+              <ArrowLeft className="w-5 h-5" />
+              <span>Back to Home</span>
+            </button>
+            
+            <div className="flex items-center space-x-2">
+              <div className={`w-3 h-3 rounded-full ${isLive ? 'bg-green-500 animate-pulse' : 'bg-gray-500'}`}></div>
+              <span className="text-sm text-gray-400">{isLive ? 'Live' : 'Offline'}</span>
             </div>
           </div>
-          
-          <h1 className="text-6xl font-bold text-white mb-4 animate-pulse">
-            Event Dashboard
-          </h1>
-          
-          <div className="text-2xl text-purple-400 font-semibold mb-8 animate-fade-in-delay">
-            Coming Soon
+
+          <div className="flex items-center space-x-4">
+            <button className="flex items-center space-x-2 bg-[#2a2a2a] hover:bg-[#3a3a3a] text-white px-4 py-2 rounded-lg transition-all duration-300">
+              <QrCode className="w-4 h-4" />
+              <span>Generate QR</span>
+            </button>
+            <button className="flex items-center space-x-2 bg-[#2a2a2a] hover:bg-[#3a3a3a] text-white px-4 py-2 rounded-lg transition-all duration-300">
+              <Download className="w-4 h-4" />
+              <span>Export</span>
+            </button>
+            <button className="flex items-center space-x-2 bg-[#FC1924] hover:bg-[#e01620] text-white px-4 py-2 rounded-lg transition-all duration-300">
+              <Share className="w-4 h-4" />
+              <span>Share</span>
+            </button>
           </div>
-          
-          <p className="text-xl text-gray-400 max-w-md mx-auto leading-relaxed animate-slide-up">
-            Get ready for an amazing event management experience! We're working on something special that will help you manage and track your events with ease.
-          </p>
-          
-          <div className="mt-12 flex justify-center space-x-4">
-            <div className="w-3 h-3 bg-purple-500 rounded-full animate-bounce"></div>
-            <div className="w-3 h-3 bg-pink-500 rounded-full animate-bounce" style={{ animationDelay: '0.1s' }}></div>
-            <div className="w-3 h-3 bg-purple-500 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></div>
+        </div>
+
+        {/* Event Info */}
+        <div className="bg-[#2a2a2a] rounded-2xl p-6 mb-8">
+          <div className="flex items-start space-x-6">
+            <div className="w-24 h-24 rounded-xl overflow-hidden">
+              <img src={eventData.image} alt={eventData.name} className="w-full h-full object-cover" />
+            </div>
+            <div className="flex-1">
+              <h1 className="text-3xl font-bold text-white mb-2">{eventData.name}</h1>
+              <div className="flex items-center space-x-6 text-gray-400">
+                <div className="flex items-center space-x-2">
+                  <Calendar className="w-4 h-4" />
+                  <span>{eventData.date}</span>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <Clock className="w-4 h-4" />
+                  <span>{eventData.time}</span>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <MapPin className="w-4 h-4" />
+                  <span>{eventData.location}</span>
+                </div>
+              </div>
+            </div>
+            <div className="flex items-center space-x-2">
+              <button className="flex items-center space-x-2 bg-[#3a3a3a] hover:bg-[#4a4a4a] text-white px-4 py-2 rounded-lg transition-all duration-300">
+                <Edit className="w-4 h-4" />
+                <span>Edit</span>
+              </button>
+            </div>
           </div>
+        </div>
+
+        {/* Tabs */}
+        <div className="flex space-x-1 mb-8">
+          {[
+            { id: 'overview', label: 'Overview', icon: BarChart3 },
+            { id: 'attendees', label: 'Attendees', icon: Users },
+            { id: 'tickets', label: 'Tickets', icon: Ticket },
+            { id: 'analytics', label: 'Analytics', icon: TrendingUp },
+            { id: 'settings', label: 'Settings', icon: Settings }
+          ].map((tab) => {
+            const Icon = tab.icon;
+            return (
+              <button
+                key={tab.id}
+                onClick={() => setActiveTab(tab.id)}
+                className={`flex items-center space-x-2 px-6 py-3 rounded-lg transition-all duration-300 ${
+                  activeTab === tab.id
+                    ? 'bg-[#FC1924] text-white'
+                    : 'bg-[#2a2a2a] text-gray-400 hover:text-white hover:bg-[#3a3a3a]'
+                }`}
+              >
+                <Icon className="w-4 h-4" />
+                <span>{tab.label}</span>
+              </button>
+            );
+          })}
+        </div>
+
+        {/* Tab Content */}
+        <div className="space-y-8">
+          {/* Overview Tab */}
+          {activeTab === 'overview' && (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+              <div className="bg-[#2a2a2a] rounded-xl p-6">
+                <div className="flex items-center justify-between mb-4">
+                  <div className="w-12 h-12 bg-blue-500/20 rounded-xl flex items-center justify-center">
+                    <Users className="w-6 h-6 text-blue-500" />
+                  </div>
+                  <span className="text-green-500 text-sm font-semibold">+12%</span>
+                </div>
+                <h3 className="text-2xl font-bold text-white mb-1">{stats.totalAttendees}</h3>
+                <p className="text-gray-400 text-sm">Total Attendees</p>
+              </div>
+
+              <div className="bg-[#2a2a2a] rounded-xl p-6">
+                <div className="flex items-center justify-between mb-4">
+                  <div className="w-12 h-12 bg-green-500/20 rounded-xl flex items-center justify-center">
+                    <CheckCircle className="w-6 h-6 text-green-500" />
+                  </div>
+                  <span className="text-green-500 text-sm font-semibold">{stats.checkInRate}%</span>
+                </div>
+                <h3 className="text-2xl font-bold text-white mb-1">{stats.checkedIn}</h3>
+                <p className="text-gray-400 text-sm">Checked In</p>
+              </div>
+
+              <div className="bg-[#2a2a2a] rounded-xl p-6">
+                <div className="flex items-center justify-between mb-4">
+                  <div className="w-12 h-12 bg-purple-500/20 rounded-xl flex items-center justify-center">
+                    <DollarSign className="w-6 h-6 text-purple-500" />
+                  </div>
+                  <span className="text-green-500 text-sm font-semibold">+8%</span>
+                </div>
+                <h3 className="text-2xl font-bold text-white mb-1">{formatCurrency(stats.totalRevenue)}</h3>
+                <p className="text-gray-400 text-sm">Total Revenue</p>
+              </div>
+
+              <div className="bg-[#2a2a2a] rounded-xl p-6">
+                <div className="flex items-center justify-between mb-4">
+                  <div className="w-12 h-12 bg-orange-500/20 rounded-xl flex items-center justify-center">
+                    <Ticket className="w-6 h-6 text-orange-500" />
+                  </div>
+                  <span className="text-green-500 text-sm font-semibold">68%</span>
+                </div>
+                <h3 className="text-2xl font-bold text-white mb-1">{stats.ticketsSold}/{stats.totalCapacity}</h3>
+                <p className="text-gray-400 text-sm">Tickets Sold</p>
+              </div>
+            </div>
+          )}
+
+          {/* Attendees Tab */}
+          {activeTab === 'attendees' && (
+            <div className="bg-[#2a2a2a] rounded-xl p-6">
+              <div className="flex justify-between items-center mb-6">
+                <h2 className="text-2xl font-bold text-white">Attendees</h2>
+                <div className="flex items-center space-x-4">
+                  <div className="relative">
+                    <Search className="w-4 h-4 absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
+                    <input
+                      type="text"
+                      placeholder="Search attendees..."
+                      value={searchTerm}
+                      onChange={(e) => setSearchTerm(e.target.value)}
+                      className="bg-[#3a3a3a] text-white pl-10 pr-4 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#FC1924]"
+                    />
+                  </div>
+                  <select
+                    value={filterStatus}
+                    onChange={(e) => setFilterStatus(e.target.value)}
+                    className="bg-[#3a3a3a] text-white px-4 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#FC1924]"
+                  >
+                    <option value="all">All Status</option>
+                    <option value="checked-in">Checked In</option>
+                    <option value="not-checked-in">Not Checked In</option>
+                    <option value="cancelled">Cancelled</option>
+                  </select>
+                </div>
+              </div>
+
+              <div className="overflow-x-auto">
+                <table className="w-full">
+                  <thead>
+                    <tr className="border-b border-gray-700">
+                      <th className="text-left py-3 px-4 text-gray-400 font-medium">Name</th>
+                      <th className="text-left py-3 px-4 text-gray-400 font-medium">Email</th>
+                      <th className="text-left py-3 px-4 text-gray-400 font-medium">Ticket Type</th>
+                      <th className="text-left py-3 px-4 text-gray-400 font-medium">Amount</th>
+                      <th className="text-left py-3 px-4 text-gray-400 font-medium">Status</th>
+                      <th className="text-left py-3 px-4 text-gray-400 font-medium">Check-in Time</th>
+                      <th className="text-left py-3 px-4 text-gray-400 font-medium">Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {filteredAttendees.map((attendee) => (
+                      <tr key={attendee.id} className="border-b border-gray-800 hover:bg-[#3a3a3a] transition-colors duration-200">
+                        <td className="py-3 px-4 text-white">{attendee.name}</td>
+                        <td className="py-3 px-4 text-gray-400">{attendee.email}</td>
+                        <td className="py-3 px-4 text-gray-400">{attendee.ticketType}</td>
+                        <td className="py-3 px-4 text-white">{formatCurrency(attendee.amount)}</td>
+                        <td className="py-3 px-4">
+                          <span className={`inline-flex items-center space-x-1 px-2 py-1 rounded-full text-xs font-medium ${getStatusColor(attendee.checkInStatus)}`}>
+                            {getStatusIcon(attendee.checkInStatus)}
+                            <span>{attendee.checkInStatus.replace('-', ' ')}</span>
+                          </span>
+                        </td>
+                        <td className="py-3 px-4 text-gray-400">
+                          {attendee.checkInTime || '-'}
+                        </td>
+                        <td className="py-3 px-4">
+                          <div className="flex items-center space-x-2">
+                            <button className="text-blue-500 hover:text-blue-400 transition-colors duration-200">
+                              <Eye className="w-4 h-4" />
+                            </button>
+                            <button className="text-green-500 hover:text-green-400 transition-colors duration-200">
+                              <CheckCircle className="w-4 h-4" />
+                            </button>
+                          </div>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          )}
+
+          {/* Tickets Tab */}
+          {activeTab === 'tickets' && (
+            <div className="space-y-6">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                {ticketTypes.map((ticket) => (
+                  <div key={ticket.name} className="bg-[#2a2a2a] rounded-xl p-6">
+                    <div className="flex justify-between items-start mb-4">
+                      <h3 className="text-xl font-bold text-white">{ticket.name}</h3>
+                      <span className="text-2xl font-bold text-green-500">{formatCurrency(ticket.price)}</span>
+                    </div>
+                    <div className="space-y-3">
+                      <div className="flex justify-between text-sm">
+                        <span className="text-gray-400">Sold</span>
+                        <span className="text-white">{ticket.sold}/{ticket.total}</span>
+                      </div>
+                      <div className="w-full bg-gray-700 rounded-full h-2">
+                        <div 
+                          className="bg-gradient-to-r from-blue-500 to-purple-500 h-2 rounded-full transition-all duration-300"
+                          style={{ width: `${(ticket.sold / ticket.total) * 100}%` }}
+                        ></div>
+                      </div>
+                      <div className="flex justify-between text-sm">
+                        <span className="text-gray-400">Revenue</span>
+                        <span className="text-green-500 font-semibold">{formatCurrency(ticket.revenue)}</span>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              <div className="bg-[#2a2a2a] rounded-xl p-6">
+                <h3 className="text-xl font-bold text-white mb-4">QR Code Generator</h3>
+                <div className="flex items-center space-x-4">
+                  <button 
+                    onClick={() => setShowQRCode(!showQRCode)}
+                    className="flex items-center space-x-2 bg-[#FC1924] hover:bg-[#e01620] text-white px-4 py-2 rounded-lg transition-all duration-300"
+                  >
+                    <QrCode className="w-4 h-4" />
+                    <span>{showQRCode ? 'Hide' : 'Show'} QR Code</span>
+                  </button>
+                  <button className="flex items-center space-x-2 bg-[#3a3a3a] hover:bg-[#4a4a4a] text-white px-4 py-2 rounded-lg transition-all duration-300">
+                    <Download className="w-4 h-4" />
+                    <span>Download All</span>
+                  </button>
+                </div>
+                
+                {showQRCode && (
+                  <div className="mt-6 p-6 bg-white rounded-xl inline-block">
+                    <div className="w-48 h-48 bg-gray-100 rounded-lg flex items-center justify-center">
+                      <QrCode className="w-32 h-32 text-gray-400" />
+                    </div>
+                    <p className="text-center text-gray-600 mt-2 text-sm">Event QR Code</p>
+                  </div>
+                )}
+              </div>
+            </div>
+          )}
+
+          {/* Analytics Tab */}
+          {activeTab === 'analytics' && (
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+              <div className="bg-[#2a2a2a] rounded-xl p-6">
+                <h3 className="text-xl font-bold text-white mb-4">Ticket Sales Over Time</h3>
+                <div className="h-64 bg-[#3a3a3a] rounded-lg flex items-center justify-center">
+                  <div className="text-center text-gray-400">
+                    <BarChart3 className="w-16 h-16 mx-auto mb-4" />
+                    <p>Chart visualization would go here</p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="bg-[#2a2a2a] rounded-xl p-6">
+                <h3 className="text-xl font-bold text-white mb-4">Revenue Breakdown</h3>
+                <div className="space-y-4">
+                  {ticketTypes.map((ticket) => (
+                    <div key={ticket.name} className="flex items-center justify-between">
+                      <div className="flex items-center space-x-3">
+                        <div className="w-4 h-4 bg-blue-500 rounded"></div>
+                        <span className="text-white">{ticket.name}</span>
+                      </div>
+                      <span className="text-green-500 font-semibold">{formatCurrency(ticket.revenue)}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* Settings Tab */}
+          {activeTab === 'settings' && (
+            <div className="bg-[#2a2a2a] rounded-xl p-6">
+              <h3 className="text-xl font-bold text-white mb-6">Event Settings</h3>
+              <div className="space-y-6">
+                <div>
+                  <label className="block text-white text-sm font-medium mb-2">Event Status</label>
+                  <select className="w-full bg-[#3a3a3a] text-white px-4 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#FC1924]">
+                    <option value="active">Active</option>
+                    <option value="paused">Paused</option>
+                    <option value="cancelled">Cancelled</option>
+                  </select>
+                </div>
+                
+                <div>
+                  <label className="block text-white text-sm font-medium mb-2">Notifications</label>
+                  <div className="space-y-2">
+                    <label className="flex items-center space-x-2">
+                      <input type="checkbox" className="rounded" />
+                      <span className="text-gray-300">Email notifications for new sales</span>
+                    </label>
+                    <label className="flex items-center space-x-2">
+                      <input type="checkbox" className="rounded" />
+                      <span className="text-gray-300">Push notifications for check-ins</span>
+                    </label>
+                  </div>
+                </div>
+
+                <div className="flex space-x-4">
+                  <button className="bg-[#FC1924] hover:bg-[#e01620] text-white px-6 py-2 rounded-lg transition-all duration-300">
+                    Save Changes
+                  </button>
+                  <button className="bg-[#3a3a3a] hover:bg-[#4a4a4a] text-white px-6 py-2 rounded-lg transition-all duration-300">
+                    Cancel
+                  </button>
+                </div>
+              </div>
+            </div>
+          )}
         </div>
       </div>
     </div>
